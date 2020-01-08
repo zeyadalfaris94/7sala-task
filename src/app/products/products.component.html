@@ -1,0 +1,59 @@
+<div class="spinner">
+  <div class="lds-spinner" *ngIf="loading else loaded">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</div>
+
+
+<ng-template #loaded>
+
+  <div class="search-results" infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()">
+    <h1 class="pl-4 mb-4">Products</h1>
+    <div class="container my-container">
+      <div class="row my-row">
+
+        <div class="col-md-4 col-lg-3 col-sm-6 my-col my-2" 
+        *ngFor="let p of productsList" [routerLink]="['/products/details/', p.id]">
+          <div class="card" (click) = "productDetail(p.id)">
+            <div *ngIf="p.images.length" class="text-center img-container">
+              <img [src]="p.images[0].src">
+            </div>
+            <div *ngIf="!p.images.length" class="text-center img-container">
+              <img src="..." [alt]="p.localized_names[0].localized_name">
+            </div>
+            <p>{{p.localized_names[0].short_description}}</p>
+            <div class="price pl-2">{{p.price}} EGP</div>
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </div>
+  </div>
+  <div class="row pb-5">
+    <div class="col-md-12 p-5">
+      <ngx-spinner
+      bdOpacity = 0.9
+      bdColor = ""
+      size = "default"
+      color = "#8b8b8a"
+      type = "ball-pulse-sync"
+      [fullScreen] = "false"
+      ></ngx-spinner>
+    </div>
+  </div>
+</ng-template>
